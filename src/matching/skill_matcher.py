@@ -9,6 +9,19 @@ def match_skills(resume_skills, job_skills):
 
     return list(matched_skills), list(missing_skills)
 
+def calculate_match_score(resume_skills, job_skills):
+
+    if not job_skills:
+        return 0
+
+    matched_skills, missing_skills = match_skills(
+        resume_skills,
+        job_skills
+    )
+
+    score = (len(matched_skills) / len(job_skills)) * 100
+
+    return round(score, 2)
 
 if __name__ == "__main__":
 
@@ -32,6 +45,11 @@ if __name__ == "__main__":
         resume_skills,
         job_skills
     )
+    score = calculate_match_score(
+        resume_skills,
+        job_skills
+    )
+ 
 
     print("----- MATCHED SKILLS -----")
 
@@ -42,3 +60,7 @@ if __name__ == "__main__":
 
     for skill in missing:
         print("-", skill)
+
+        
+    print("\n----- MATCH SCORE -----")
+    print(f"Score: {score}%")    
