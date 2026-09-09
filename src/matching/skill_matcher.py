@@ -23,44 +23,68 @@ def calculate_match_score(resume_skills, job_skills):
 
     return round(score, 2)
 
-if __name__ == "__main__":
+def calculate_final_score(skill_score, tfidf_score):
 
-    resume_skills = [
-        "Python",
-        "Flask",
-        "SQL",
-        "Git",
-        "React"
-    ]
-
-    job_skills = [
-        "Python",
-        "FastAPI",
-        "PostgreSQL",
-        "Docker",
-        "Git"
-    ]
-
-    matched, missing = match_skills(
-        resume_skills,
-        job_skills
+    final_score = (
+        (skill_score * 0.70)
+        +
+        (tfidf_score * 0.30)
     )
-    score = calculate_match_score(
-        resume_skills,
-        job_skills
-    )
+
+    return round(final_score, 2)
+
+# if __name__ == "__main__":
+
+#     resume_skills = [
+#         "Python",
+#         "Flask",
+#         "SQL",
+#         "Git",
+#         "React"
+#     ]
+
+#     job_skills = [
+#         "Python",
+#         "FastAPI",
+#         "PostgreSQL",
+#         "Docker",
+#         "Git"
+#     ]
+
+#     matched, missing = match_skills(
+#         resume_skills,
+#         job_skills
+#     )
+#     score = calculate_match_score(
+#         resume_skills,
+#         job_skills
+#     )
  
 
-    print("----- MATCHED SKILLS -----")
+#     print("----- MATCHED SKILLS -----")
 
-    for skill in matched:
-        print("-", skill)
+#     for skill in matched:
+#         print("-", skill)
 
-    print("\n----- MISSING SKILLS -----")
+#     print("\n----- MISSING SKILLS -----")
 
-    for skill in missing:
-        print("-", skill)
+#     for skill in missing:
+#         print("-", skill)
 
-        
-    print("\n----- MATCH SCORE -----")
-    print(f"Score: {score}%")    
+
+#     print("\n----- MATCH SCORE -----")
+#     print(f"Score: {score}%")    
+
+if __name__ == "__main__":
+
+    skill_score = 40.0
+    tfidf_score = 51.01
+
+    final_score = calculate_final_score(
+        skill_score,
+        tfidf_score
+    )
+
+    print("Skill Match Score:", skill_score, "%")
+    print("TF-IDF Similarity:", tfidf_score, "%")
+    print("Final Match Score:", final_score, "%")    

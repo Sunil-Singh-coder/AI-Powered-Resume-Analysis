@@ -4,7 +4,9 @@ from src.extraction.resume_parser import extract_text_from_pdf
 from src.extraction.jd_parser import extract_text_from_jd
 from src.preprocessing.text_cleaner import clean_text
 from src.skills.skill_extractor import extract_skills
-from src.matching.skill_matcher import match_skills, calculate_match_score
+from src.matching.skill_matcher import match_skills, calculate_match_score,calculate_final_score
+from src.matching.tfidf_similarity import calculate_tfidf_similiarity
+
 
 
 def analyze_resume(resume_path,jd_path):
@@ -20,6 +22,8 @@ def analyze_resume(resume_path,jd_path):
     # extract skills from resume and job discription 
     resume_skills=extract_skills(resume_text)
     job_skills=extract_skills(jd_text)
+    resume_skill_text = " ".join(resume_skills)
+    job_skill_text = " ".join(job_skills)
 
     # match resume skills and jd skills 
     matched_skills, missing_skills = match_skills(
@@ -31,16 +35,32 @@ def analyze_resume(resume_path,jd_path):
     # -------------------------
     # 5. Calculate Score
     # -------------------------
-    score = calculate_match_score(
+    skill_score = calculate_match_score(
         resume_skills,
         job_skills
     )
+        # -------------------------
+    # 6. Calculate similarity 
+    # -------------------------
+    tfidf_score=calculate_tfidf_similiarity(resume_skill_text,job_skill_text)
+
+       # -------------------------
+    # 6. Calculate similarity 
+    # -------------------------
+    final_score = calculate_final_score(
+    skill_score,
+    tfidf_score
+)
+
+
     return {
         "resume_skills": resume_skills,
         "job_skills": job_skills,
         "matched_skills": matched_skills,
         "missing_skills": missing_skills,
-        "match_score": score
+        "skill_score": skill_score,
+        "tfidf_score": tfidf_score,
+        "final_score": final_score
     }
 
 
@@ -82,8 +102,16 @@ if __name__ == "__main__":
         print("-", skill)
 
 
-    print("\nMatch Score:")
-    print(f'{result["match_score"]}%')
+    print("\nSkill Match Score:")
+    print(f'{result["skill_score"]}%')
+
+    print("\nTF-IDF Similarity Score:")
+    print(f'{result["tfidf_score"]}%')
+
+    print("\nFinal Match Score:")
+    print(f'{result["final_score"]}%')
+
+
 
 
     
