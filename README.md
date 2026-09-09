@@ -1,3 +1,19 @@
+## For implement Sentence Transformer
+Ab workflow
+
+Hum ek-ek step karenge:
+
+Step 15.1 → Sentence Transformers install
+↓
+Step 15.2 → Model load/test
+↓
+Step 15.3 → Resume & JD embeddings
+↓
+Step 15.4 → Semantic similarity score
+↓
+Step 15.5 → Analyzer mein integrate
+
+
 <!-- Traditional step  -->
 Resume PDF
       ↓

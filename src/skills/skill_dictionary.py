@@ -42,30 +42,20 @@ SKILLS = [
 ]
 
 SKILL_ALIASES = {
-
-    "js": "JavaScript",
-    "javascript": "JavaScript",
-
-    "reactjs": "React",
-    "react.js": "React",
-
-    "node": "Node.js",
-    "nodejs": "Node.js",
-
-    "postgres": "PostgreSQL",
-    "postgresql": "PostgreSQL",
-
-    "mysql": "MySQL",
-
     "ml": "Machine Learning",
     "machine learning": "Machine Learning",
-
     "dl": "Deep Learning",
     "deep learning": "Deep Learning",
-
     "nlp": "Natural Language Processing",
     "natural language processing": "Natural Language Processing",
-
+    "js": "JavaScript",
+    "javascript": "JavaScript",
+    "reactjs": "React",
+    "react.js": "React",
+    "node": "Node.js",
+    "nodejs": "Node.js",
+    "postgres": "PostgreSQL",
+    "postgresql": "PostgreSQL",
     "sklearn": "Scikit-learn",
     "scikit learn": "Scikit-learn"
 }

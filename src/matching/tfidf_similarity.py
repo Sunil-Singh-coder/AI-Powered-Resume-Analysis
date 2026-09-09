@@ -34,7 +34,7 @@ def calculate_tfidf_similiarity(resume_text,job_text):
 
 
    score = similarity[0][0] * 100
-   return score
+   return round(score,2)
 
 
 # print("TF-IDF Similarity Score:")

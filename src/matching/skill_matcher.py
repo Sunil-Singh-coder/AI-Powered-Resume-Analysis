@@ -1,3 +1,4 @@
+from src.skills.jd_skill_config import REQUIRED_SKILL_GROUPS
 def match_skills(resume_skills, job_skills):
 
     resume_skills_set = set(resume_skills)
@@ -23,68 +24,84 @@ def calculate_match_score(resume_skills, job_skills):
 
     return round(score, 2)
 
-def calculate_final_score(skill_score, tfidf_score):
-
+def calculate_final_score(
+    skill_score,
+    semantic_score,
+    tfidf_score):
     final_score = (
-        (skill_score * 0.70)
+        (skill_score * 0.50)
         +
-        (tfidf_score * 0.30)
+        (semantic_score * 0.40)
+        +
+        (tfidf_score * 0.10)
     )
 
     return round(final_score, 2)
 
-# if __name__ == "__main__":
+# match skills with or & and concept 
+def match_skill_groups(resume_skills, required_skill_groups):
 
-#     resume_skills = [
-#         "Python",
-#         "Flask",
-#         "SQL",
-#         "Git",
-#         "React"
-#     ]
+    resume_skills_set = set(resume_skills)
 
-#     job_skills = [
-#         "Python",
-#         "FastAPI",
-#         "PostgreSQL",
-#         "Docker",
-#         "Git"
-#     ]
+    matched_groups = []
+    missing_groups = []
 
-#     matched, missing = match_skills(
-#         resume_skills,
-#         job_skills
-#     )
-#     score = calculate_match_score(
-#         resume_skills,
-#         job_skills
-#     )
- 
+    for group in required_skill_groups:
 
-#     print("----- MATCHED SKILLS -----")
+        group_type = group["type"]
+        skills = group["skills"]
 
-#     for skill in matched:
-#         print("-", skill)
+        if group_type == "single":
 
-#     print("\n----- MISSING SKILLS -----")
+            if skills[0] in resume_skills_set:
+                matched_groups.append(group)
+            else:
+                missing_groups.append(group)
 
-#     for skill in missing:
-#         print("-", skill)
+        elif group_type == "or":
 
+            if any(skill in resume_skills_set for skill in skills):
+                matched_groups.append(group)
+            else:
+                missing_groups.append(group)
 
-#     print("\n----- MATCH SCORE -----")
-#     print(f"Score: {score}%")    
+        elif group_type == "and":
+
+            if all(skill in resume_skills_set for skill in skills):
+                matched_groups.append(group)
+            else:
+                missing_groups.append(group)
+
+    return matched_groups, missing_groups
 
 if __name__ == "__main__":
 
-    skill_score = 40.0
-    tfidf_score = 51.01
+    resume_skills = [
+        "Python",
+        "Flask",
+        "SQL",
+        "Git",
+        "GitHub"
+    ]
 
-    final_score = calculate_final_score(
-        skill_score,
-        tfidf_score
+    # required_skill_groups = [
+    #     ["Python"],
+    #     ["FastAPI", "Flask"],
+    #     ["SQL", "PostgreSQL"],
+    #     ["REST API"],
+    #     ["Git", "GitHub"],
+    #     ["Docker"]
+    # ]
+
+    matched, missing = match_skill_groups(
+        resume_skills,
+        REQUIRED_SKILL_GROUPS
     )
 
-    print("Skill Match Score:", skill_score, "%")
-    print("TF-IDF Similarity:", tfidf_score, "%")
-    print("Final Match Score:", final_score, "%")    
+    print("Matched Groups:")
+    for group in matched:
+        print("-", group)
+
+    print("\nMissing Groups:")
+    for group in missing:
+        print("-", group)

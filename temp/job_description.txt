@@ -1,0 +1,1 @@
+We are looking for a Python Backend Developer.  Requirements:  Strong knowledge of Python. Experience with FastAPI or Flask. Good knowledge of SQL and PostgreSQL. Experience with REST API development. Knowledge of Git and GitHub. Basic understanding of Docker. Knowledge of Machine Learning and NLP is a plus.
