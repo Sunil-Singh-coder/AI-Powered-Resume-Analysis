@@ -1,7 +1,7 @@
 ## For implement Sentence Transformer
 Ab workflow
 
-Hum ek-ek step karenge:
+
 
 Step 15.1 → Sentence Transformers install
 ↓
@@ -36,20 +36,20 @@ JD Processing
 
 
 This is the our that we are following 
-✅ PDF Extraction
-✅ Text Cleaning
-✅ spaCy Processing
-✅ Skill Dictionary
-✅ Skill Aliases
-✅ PhraseMatcher
-✅ Resume Skill Extraction
-✅ JD Extraction
-✅ Skill Matching
-🔄 Match Score ← WE ARE HERE
-⬜ Semantic Matching
-⬜ Skill Gap Analysis
-⬜ LLM Recommendations
-⬜ FastAPI
-⬜ PostgreSQL
-⬜ React
+ PDF Extraction
+Text Cleaning
+spaCy Processing
+Skill Dictionary
+ Skill Aliases
+PhraseMatcher
+Resume Skill Extraction
+JD Extraction
+Skill Matching
+Match Score 
+Semantic Matching
+ Skill Gap Analysis
+ LLM Recommendations
+ FastAPI
+PostgreSQL
+ React
 

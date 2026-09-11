@@ -4,7 +4,7 @@ from src.extraction.resume_parser import extract_text_from_pdf
 from src.extraction.jd_parser import extract_text_from_jd
 from src.preprocessing.text_cleaner import clean_text
 from src.skills.skill_extractor import extract_skills
-from src.matching.skill_matcher import match_skills, calculate_match_score,calculate_final_score
+from src.matching.skill_matcher import generate_skill_gap, calculate_match_score,calculate_final_score
 from src.matching.tfidf_similarity import calculate_tfidf_similiarity
 from src.matching.semantic_similarity import calculate_semantic_similarity
 
@@ -28,7 +28,7 @@ def analyze_resume(resume_path,jd_path):
     job_skill_text = " ".join(job_skills)
 
     # match resume skills and jd skills 
-    matched_skills, missing_skills = match_skills(
+    skills_gap= generate_skill_gap(
         resume_skills,
         job_skills
     )
@@ -66,22 +66,31 @@ def analyze_resume(resume_path,jd_path):
 
 
     return {
-        "resume_skills": resume_skills,
-        "job_skills": job_skills,
-        "matched_skills": matched_skills,
-        "missing_skills": missing_skills,
+    "resume_skills": resume_skills,
+    "job_skills": job_skills,
+
+    "skill_analysis": {
+        "matched_skills": skills_gap["matched_skills"] ,
+        "missing_skills": skills_gap["missing_skills"],
+        "total_required_skills": skills_gap["total_required_skills"],
+        "total_matched_skills": skills_gap["total_matched_skills"],
+        "total_missing_skills": skills_gap["total_missing_skills"]
+    },
+
+    "scores": {
         "skill_score": float(skill_score),
         "tfidf_score": float(tfidf_score),
         "semantic_score": float(semantic_score),
         "final_score": float(final_score)
     }
+}
 
 
 if __name__ == "__main__":
 
     BASE_DIR = Path(__file__).resolve().parents[2]
 
-    resume_path = BASE_DIR / "data" / "resumes" / "Resume_ML.pdf"
+    resume_path = BASE_DIR / "data" / "resumes" / "Afreen_Khatoon_Resume.pdf"
 
     jd_path = BASE_DIR / "data" / "job_descriptions" / "job1.txt"
 
@@ -113,6 +122,11 @@ if __name__ == "__main__":
     print("\nMissing Skills:")
     for skill in result["missing_skills"]:
         print("-", skill)
+
+    print(f"Total required skills { result["skills_gap"]["total_required_skills"]} ")  
+    print(f"Total matched skills { result["skills_gap"]["total_matched_skills"]} ")  
+    print(f"Total missing skills { result["skills_gap"]["total_missing_skills"]}")  
+     
 
 
     print("\nSkill Match Score:")

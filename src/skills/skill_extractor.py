@@ -55,15 +55,12 @@ def extract_skills(text):
     for match_id, start, end in matches:
 
         matched_text = doc[start:end].text
-
         match_name = nlp.vocab.strings[match_id]
-
         if match_name == "SKILLS":
 
             standard_skill = matched_text
 
         else:
-
             standard_skill = SKILL_ALIASES.get(
                 matched_text.lower()
             )
@@ -75,16 +72,16 @@ def extract_skills(text):
     return found_skills
 
 # For  Testing pupuse 
-# if __name__ == "__main__":
+if __name__ == "__main__":
 
-#     text = """
-#     I have experience in Python, ML, NLP, Postgres,
-#     ReactJS, JS and Flask.
-#     """
+    text = """
+    I have experience in Python, ML, NLP, Postgres,
+    ReactJS, JS, Flask and sklearn.
+    """
 
-#     skills = extract_skills(text)
+    skills = extract_skills(text)
 
-#     print("Detected Skills:")
+    print("Detected Skills:")
 
-#     for skill in skills:
-#         print("-", skill)
+    for skill in skills:
+        print("-", skill)

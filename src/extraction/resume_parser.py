@@ -23,6 +23,7 @@ def extract_text_from_pdf(pdf_path):
    return text
 
 # testing  purpose 
+
 # pdf_path="data/resumes/Resume_ML.pdf"
 # 1. # extract pdf  
 # resume_text= extract_text_pdf(pdf_path)

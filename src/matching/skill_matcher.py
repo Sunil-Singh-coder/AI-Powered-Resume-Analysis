@@ -1,26 +1,35 @@
 from src.skills.jd_skill_config import REQUIRED_SKILL_GROUPS
-def match_skills(resume_skills, job_skills):
 
+def generate_skill_gap(resume_skills, job_skills):
     resume_skills_set = set(resume_skills)
     job_skills_set = set(job_skills)
 
-    matched_skills = resume_skills_set.intersection(job_skills_set)
+    matched_skills = sorted(
+        resume_skills_set.intersection(job_skills_set)
+    )
 
-    missing_skills = job_skills_set - resume_skills_set
+    missing_skills = sorted(
+        job_skills_set - resume_skills_set
+    )
 
-    return list(matched_skills), list(missing_skills)
-
+    return {
+        "matched_skills": matched_skills,
+        "missing_skills": missing_skills,
+        "total_required_skills": len(job_skills_set),
+        "total_matched_skills": len(matched_skills),
+        "total_missing_skills": len(missing_skills)
+    }
 def calculate_match_score(resume_skills, job_skills):
 
     if not job_skills:
         return 0
 
-    matched_skills, missing_skills = match_skills(
+    skills_gap = generate_skill_gap(
         resume_skills,
         job_skills
     )
 
-    score = (len(matched_skills) / len(job_skills)) * 100
+    score = (len(skills_gap["matched_skills"]) / len(job_skills)) * 100
 
     return round(score, 2)
 
