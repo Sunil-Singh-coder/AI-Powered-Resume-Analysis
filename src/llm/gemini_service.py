@@ -75,22 +75,12 @@ Keep the response clear and concise and small.
 # 5. Interview preparation suggestions
 
 
-    # response = client.models.generate_content(
-    #     model="gemini-3.6-flash",
-    #     contents=prompt
-    # )
-    response='''Hello i am sunil singh kya ho rha hai Isse evaluator ko ek glance mein samajh aa jayega:
+    response = client.models.generate_content(
+        model="gemini-3.6-flash",
+        contents=prompt
+    )
 
-Resume mein kya hai → Job ke liye kya missing hai.
-
-Ek chhota improvement
-
-Missing skills mein + ka matlab "add this skill" samjha ja sakta hai. Agar tumhe better UX chahiye to baad mein isko ! ya × icon se change kar sakte hain.
-
-Ab ye code replace karke test karo.
-done → next mein AI Career Recommendation section ko professional card + Markdown-style formatting denge.'''
-
-    return response
+    return response.text
 
 
 if __name__ == "__main__":
