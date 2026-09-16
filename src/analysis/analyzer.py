@@ -7,6 +7,7 @@ from src.skills.skill_extractor import extract_skills
 from src.matching.skill_matcher import generate_skill_gap, calculate_match_score,calculate_final_score
 from src.matching.tfidf_similarity import calculate_tfidf_similiarity
 from src.matching.semantic_similarity import calculate_semantic_similarity
+from src.llm.gemini_service import generate_career_recommendation
 
 
 
@@ -62,12 +63,29 @@ def analyze_resume(resume_path,jd_path):
     skill_score,
     semantic_score,
     tfidf_score
-)
-
-
-    return {
+)    
+    ai_recommendation = generate_career_recommendation({
     "resume_skills": resume_skills,
     "job_skills": job_skills,
+
+    "skill_analysis": {
+        "matched_skills": skills_gap["matched_skills"],
+        "missing_skills": skills_gap["missing_skills"]
+    },
+
+    "scores": {
+        "skill_score": float(skill_score),
+        "tfidf_score": float(tfidf_score),
+        "semantic_score": float(semantic_score),
+        "final_score": float(final_score)
+    }
+})
+    
+    return {
+    "resume_text": resume_text,
+    "resume_skills": resume_skills,
+    "job_skills": job_skills,
+    "ai_recommendation": ai_recommendation,
 
     "skill_analysis": {
         "matched_skills": skills_gap["matched_skills"] ,
